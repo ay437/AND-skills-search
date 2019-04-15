@@ -10,15 +10,15 @@ class App extends Component {
   };
 
   async componentDidMount() {
-    const response = await fetch('https://randomuser.me/api/?results=50');
+    const response = await fetch('http://localhost:8080/search/');
     const body = await response.json();
     this.setState({ groups: body, isLoading: false });
     console.log(body);
   }
 
-  render() {
+  render() { 
     const {groups, isLoading} = this.state;
-
+    console.log(groups);
     if (isLoading) {
       return <p>Loading...</p>;
     }
@@ -31,18 +31,28 @@ class App extends Component {
                   <table class="pure-table">
                    <thead>
                     <tr>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>City</th>
+                      <th>Client</th>
+                      <th>Industry</th>
+                      <th>Project</th>
+                      <th>Capability</th>
+                      <th>Engagament Type</th>
+                      <th>Service Owner</th>
+                      <th>PDL</th>
+
                     </tr>
                    </thead>
                    <tbody>
-                   {groups.results.map(group => {
+                   {groups.map(group => {
                      return (
                      <tr key={group}>
-                      <td>{group.name.first}</td>
-                      <td>{group.name.last}</td>
-                      <td>{group.location.city}</td>
+                      <td>{group.clientName}</td>
+                      <td>{group.industry}</td>
+                      <td>{group.projectName}</td>
+                      <td>{group.capability}</td>
+                      <td>{group.engagementType}</td>
+                      <td>{group.serviceOwner}</td>
+                      <td>{group.pdl}</td>
+
                      </tr>
                      )
                      })
