@@ -21,6 +21,7 @@ class Search extends Component {
    this.setState({ results: body });
  }
 
+
  handleInputChange = (e) => {
    this.setState({
      query: e.target.value
@@ -29,12 +30,13 @@ class Search extends Component {
 
  submitForm = (e) => {
    e.preventDefault();
-   let querySearch = "http://localhost:8080/search/" + this.state.query
+   let querySearch = "http://localhost:8080/searchByPrediction/" + this.state.query
    fetch(querySearch)
    .then(response => {
      return response.json();
    })
    .then(data => {
+    console.log(data);
      this.setState({
        results: data
      })
@@ -42,6 +44,7 @@ class Search extends Component {
  }
 
  render() {
+  const results = this.state;
    return (
      <form onSubmit={this.submitForm}>
        <input
@@ -51,7 +54,9 @@ class Search extends Component {
        />
        <p>{this.state.query}</p>
        <button type="submit" value="Submit" >Submit</button>
-       <p>{}</p>
+                  
+                    }
+                  
      </form>
    )
  }

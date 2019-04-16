@@ -14,7 +14,6 @@ class App extends Component {
     const response = await fetch('http://localhost:8080/search');
     const body = await response.json();
     this.setState({ groups: body, isLoading: false });
-    console.log(body);
   }
 
   render() { 
