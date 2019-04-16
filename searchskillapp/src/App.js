@@ -21,14 +21,12 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
+          <h2 className="page-title"><img className="and-logo" src={require('./images/and-logo.png')}></img>Experience Database</h2>
           < Search />
-          <div className="App-intro"> 
-              
-          </div>
         </header>
       </div>
     );
   }
-}
-
-export default App;
+ }
+ 
+ export default App;

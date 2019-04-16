@@ -38,12 +38,16 @@ class Search extends Component {
    .then(data => {
     console.log(data);
      this.setState({
-       results: data
+       results: data 
      })
+   })
+   .catch((error) => {
+     console.error("No results found");
    })
  }
 
  render() {
+   const { results } = this.state;
    return (
      <form onSubmit={this.submitForm}>
        <input
@@ -66,7 +70,7 @@ class Search extends Component {
            </tr>
           </thead>
           <tbody>
-          {this.state.results.map(result => {
+          {results.map(result => {
             return (
             <tr key={result.clientEngagementId}>
              <td>{result.clientName}</td>
@@ -76,7 +80,6 @@ class Search extends Component {
              <td>{result.engagementType}</td>
              <td>{result.serviceOwner}</td>
              <td>{result.pdl}</td>
-
             </tr>
             )
             })

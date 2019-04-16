@@ -1,0 +1,16 @@
+.App {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 50px;
+  position: relative;
+}
+
+img.and-logo {
+  width: 100px;
+}
+
+h2.page-title {
+  text-align: center;
+  margin-bottom: 40px;
+}
