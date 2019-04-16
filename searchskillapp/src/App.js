@@ -46,7 +46,7 @@ class App extends Component {
                    <tbody>
                    {groups.map(group => {
                      return (
-                     <tr key={group}>
+                     <tr key={group.clientEngagementId}>
                       <td>{group.clientName}</td>
                       <td>{group.industry}</td>
                       <td>{group.projectName}</td>
