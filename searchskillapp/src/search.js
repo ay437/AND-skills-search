@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-const API_URL = 'http://localhost:8080/searchByPrediction/';
+const API_URL = 'http://localhost:8080/search/';
 
 class Search extends Component {
  constructor(props) {
  super(props);
  this.state = {
    query: '',
-   results: {}
+   results: []
  };
 
  this.handleInputChange = this.handleInputChange.bind(this);
@@ -30,7 +30,7 @@ class Search extends Component {
 
  submitForm = (e) => {
    e.preventDefault();
-   let querySearch = "http://localhost:8080/searchByPrediction/" + this.state.query
+   let querySearch = API_URL + this.state.query
    fetch(querySearch)
    .then(response => {
      return response.json();
@@ -44,7 +44,6 @@ class Search extends Component {
  }
 
  render() {
-  const results = this.state;
    return (
      <form onSubmit={this.submitForm}>
        <input
@@ -52,11 +51,38 @@ class Search extends Component {
          value={this.state.query}
          onChange={this.handleInputChange}
        />
-       <p>{this.state.query}</p>
        <button type="submit" value="Submit" >Submit</button>
-                  
-                    }
-                  
+          <table className="pure-table">
+          <thead>
+           <tr>
+             <th>Client</th>
+             <th>Industry</th>
+             <th>Project</th>
+             <th>Capability</th>
+             <th>Engagament Type</th>
+             <th>Service Owner</th>
+             <th>PDL</th>
+
+           </tr>
+          </thead>
+          <tbody>
+          {this.state.results.map(result => {
+            return (
+            <tr key={result.clientEngagementId}>
+             <td>{result.clientName}</td>
+             <td>{result.industry}</td>
+             <td>{result.projectName}</td>
+             <td>{result.capability}</td>
+             <td>{result.engagementType}</td>
+             <td>{result.serviceOwner}</td>
+             <td>{result.pdl}</td>
+
+            </tr>
+            )
+            })
+           }
+          </tbody>
+         </table>
      </form>
    )
  }
