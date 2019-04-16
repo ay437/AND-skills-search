@@ -50,12 +50,15 @@ class Search extends Component {
    const { results } = this.state;
    return (
      <form onSubmit={this.submitForm}>
+      <div className="search-box">
+      <img className="magnifying-glass" src={require('./images/magnifying-glass.png')}></img>
        <input
          placeholder="Search for..."
          value={this.state.query}
          onChange={this.handleInputChange}
        />
        <button type="submit" value="Submit" >Submit</button>
+      </div>
           <table className="pure-table">
           <thead>
            <tr>
