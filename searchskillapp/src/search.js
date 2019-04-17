@@ -102,7 +102,8 @@ class Search extends Component {
        <div className="errorMsg">{this.state.errorTxt}</div>
       </div>
          { this.state.isValidTxt ? results.hasOwnProperty('errorMessage') ? <p><h4> {results.errorMessage}</h4></p> :
-          <table className="pure-table">
+         <div className="table-responsive">
+          <table className="pure-table table">
           <thead>
            <tr>
              <th>Client</th>
@@ -133,6 +134,7 @@ class Search extends Component {
            }       
           </tbody>
          </table>
+         </div>
          :<pr></pr> 
         }
      </form>
