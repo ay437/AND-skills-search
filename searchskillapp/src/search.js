@@ -7,7 +7,8 @@ class Search extends Component {
  super(props);
  this.state = {
    query: '',
-   results: []
+   results: [],
+   hasError: false
  };
 
  this.handleInputChange = this.handleInputChange.bind(this);
@@ -41,13 +42,22 @@ class Search extends Component {
        results: data 
      })
    })
-   .catch((error) => {
-     console.error("No results found");
-   })
  }
 
  render() {
    const { results } = this.state;
+  
+   if(results.hasOwnProperty('errorMessage')) {
+     this.setState(
+       {
+         hasError: true
+       }
+     );
+   }
+   if(this.state.hasError) {
+     console.log("HEllo" + results.errorMessage);
+   }
+   
    return (
      <form onSubmit={this.submitForm}>
       <div className="search-box">
@@ -93,5 +103,6 @@ class Search extends Component {
    )
  }
 }
+
 
 export default Search
