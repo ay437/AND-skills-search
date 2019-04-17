@@ -47,17 +47,6 @@ class Search extends Component {
  render() {
    const { results } = this.state;
   
-   if(results.hasOwnProperty('errorMessage')) {
-     this.setState(
-       {
-         hasError: true
-       }
-     );
-   }
-   if(this.state.hasError) {
-     console.log("HEllo" + results.errorMessage);
-   }
-   
    return (
      <form onSubmit={this.submitForm}>
       <div className="search-box">
@@ -67,8 +56,10 @@ class Search extends Component {
          value={this.state.query}
          onChange={this.handleInputChange}
        />
-       <button type="submit" value="Submit" >Submit</button>
+       <button type="submit" value="Submit" >Search</button>
+       
       </div>
+         { results.hasOwnProperty('errorMessage') ? <p><h4> {results.errorMessage}</h4></p> :
           <table className="pure-table">
           <thead>
            <tr>
@@ -82,8 +73,9 @@ class Search extends Component {
 
            </tr>
           </thead>
-          <tbody>
-          {results.map(result => {
+          <tbody>      
+          {    
+            results.map(result => {
             return (
             <tr key={result.clientEngagementId}>
              <td>{result.clientName}</td>
@@ -96,9 +88,10 @@ class Search extends Component {
             </tr>
             )
             })
-           }
+           }       
           </tbody>
          </table>
+         }
      </form>
    )
  }
