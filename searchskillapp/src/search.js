@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 const API_URL = 'http://localhost:8080/search/';
+const API_SUGGEST_URL = 'http://localhost:8080/searchByPrediction/';
 
 class Search extends Component {
  constructor(props) {
@@ -9,7 +10,8 @@ class Search extends Component {
    query: '',
    results: [],
    errorTxt: '',
-   isValidTxt: true
+   isValidTxt: true,
+   suggestedResults: []
  };
 
  this.handleInputChange = this.handleInputChange.bind(this);
@@ -32,6 +34,27 @@ class Search extends Component {
    this.setState({errorTxt});
  }
 
+ handlePredictiveSearch = (e) => {
+   this.setState({query: e.target.value})
+   if(this.state.query.length > 2) {
+     let querySearch = API_SUGGEST_URL + this.state.query;
+     fetch(querySearch).then(response => {
+       return response.json();
+     })
+     .then(data => {
+       this.setState({suggestedResults: data})
+     });
+     if(this.state.suggestedResults.length > 0){
+       console.log(this.state.suggestedResults.length);
+        let searchElementId = document.getElementById('inputSearchTxt');
+        let predictionElementId = document.getElementById('predictions');
+        predictionElementId.innerHTML = this.state.suggestedResults.map(suggestedResult =>{
+          return (suggestedResult.suggestedText);
+        })
+      }
+    }
+  }
+
  submitForm = (e) => {
   e.preventDefault();
    if(this.validateFormInput()) { 
@@ -53,7 +76,6 @@ class Search extends Component {
   let textFieldValue = this.state.query;
   this.state.isValidTxt = true;
   this.setState({"errorTxt" :  ""});
-  // /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]+$
   if(!textFieldValue.match(/^[a-zA-Z0-9\-\&\s.]*$/)) {
     this.state.isValidTxt = false;
     this.setState({"errorTxt" :  "*Please enter alphanumeric characters only."});
@@ -72,9 +94,11 @@ class Search extends Component {
          placeholder="Search for..."
          value={this.state.query}
          onChange={this.handleInputChange}
-         name="inputSearchTxt"
+         id="inputSearchTxt"
+         //onKeyUp={this.handlePredictiveSearch}
        /> 
        <button type="submit" value="Submit" >Search</button>
+       <div id="predictions"> </div>
        <div className="errorMsg">{this.state.errorTxt}</div>
       </div>
          { this.state.isValidTxt ? results.hasOwnProperty('errorMessage') ? <p><h4> {results.errorMessage}</h4></p> :
