@@ -53,8 +53,8 @@ class Search extends Component {
   let textFieldValue = this.state.query;
   this.state.isValidTxt = true;
   this.setState({"errorTxt" :  ""});
-
-  if(!textFieldValue.match(/^[a-zA-Z0-9]*$/)) {
+  // /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]+$
+  if(!textFieldValue.match(/^[a-zA-Z0-9\-\&\s.]*$/)) {
     this.state.isValidTxt = false;
     this.setState({"errorTxt" :  "*Please enter alphanumeric characters only."});
   }
