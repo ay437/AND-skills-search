@@ -98,7 +98,7 @@ class Search extends Component {
             <tr key={result.clientEngagementId}>
              <td>{result.clientName}</td>
              <td>{result.industry}</td>
-             <td><a href={result.link} target="_blank">{result.projectName}</a></td>
+            <td>{result.link===""? result.projectName : <a href={result.link} target="_blank">{result.projectName}</a> } </td>
              <td>{result.capability}</td>
              <td>{result.engagementType}</td>
              <td>{result.serviceOwner}</td>
