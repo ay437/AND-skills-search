@@ -8,7 +8,8 @@ class Search extends Component {
  this.state = {
    query: '',
    results: [],
-   hasError: false
+   errorTxt: '',
+   isValidTxt: true
  };
 
  this.handleInputChange = this.handleInputChange.bind(this);
@@ -24,24 +25,40 @@ class Search extends Component {
 
 
  handleInputChange = (e) => {
-   this.setState({
+  let errorTxt = this.state.errorTxt; 
+  this.setState({
      query: e.target.value
    })
+   this.setState({errorTxt});
  }
 
  submitForm = (e) => {
-   e.preventDefault();
-   let querySearch = API_URL + this.state.query
-   fetch(querySearch)
-   .then(response => {
-     return response.json();
-   })
-   .then(data => {
-    console.log(data);
-     this.setState({
-       results: data 
-     })
-   })
+  e.preventDefault();
+   if(this.validateFormInput()) { 
+    let querySearch = API_URL + this.state.query
+    fetch(querySearch)
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      this.setState({
+        results: data 
+      })
+    })
+    }
+ }
+
+ validateFormInput(){
+  let textFieldValue = this.state.query;
+  this.state.isValidTxt = true;
+  this.setState({"errorTxt" :  ""});
+
+  if(!textFieldValue.match(/^[a-zA-Z0-9]*$/)) {
+    this.state.isValidTxt = false;
+    this.setState({"errorTxt" :  "*Please enter alphanumeric characters only."});
+  }
+  return this.state.isValidTxt;
  }
 
  render() {
@@ -50,16 +67,17 @@ class Search extends Component {
    return (
      <form onSubmit={this.submitForm}>
       <div className="search-box">
-      <img className="magnifying-glass" src={require('./images/magnifying-glass.png')}></img>
+       <img className="magnifying-glass" src={require('./images/magnifying-glass.png')}></img> 
        <input
          placeholder="Search for..."
          value={this.state.query}
          onChange={this.handleInputChange}
-       />
+         name="inputSearchTxt"
+       /> 
        <button type="submit" value="Submit" >Search</button>
-       
+       <div className="errorMsg">{this.state.errorTxt}</div>
       </div>
-         { results.hasOwnProperty('errorMessage') ? <p><h4> {results.errorMessage}</h4></p> :
+         { this.state.isValidTxt ? results.hasOwnProperty('errorMessage') ? <p><h4> {results.errorMessage}</h4></p> :
           <table className="pure-table">
           <thead>
            <tr>
@@ -91,7 +109,8 @@ class Search extends Component {
            }       
           </tbody>
          </table>
-         }
+         :<pr></pr> 
+        }
      </form>
    )
  }

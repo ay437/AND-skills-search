@@ -25,3 +25,8 @@ img.magnifying-glass {
   width: 27px;
   margin-right: 5px;
 }
+
+.errorMsg {
+  color: #cc0000;
+  margin-bottom: 12px;
+}
