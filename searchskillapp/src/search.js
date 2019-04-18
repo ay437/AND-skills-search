@@ -78,7 +78,7 @@ class Search extends Component {
   this.setState({"errorTxt" :  ""});
   if(!textFieldValue.match(/^[a-zA-Z0-9\-\&\s.]*$/)) {
     this.state.isValidTxt = false;
-    this.setState({"errorTxt" :  "*Please enter alphanumeric characters only."});
+    this.setState({"errorTxt" :  "*Invalid characters found. Accepted characters are 'a-z', 'A-Z', '0-9', '&', '.'"});
   }
   return this.state.isValidTxt;
  }
